@@ -1,7 +1,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: #f5f5f5;
+    background: #817979;
     margin: 0;
     padding: 0;
   }
@@ -17,7 +17,7 @@ body {
   
  
   .tour-card {
-    background: white;
+    background: rgb(120, 225, 236);
     border: 1px solid #ddd;
     border-radius: 5px;
     overflow: hidden;
