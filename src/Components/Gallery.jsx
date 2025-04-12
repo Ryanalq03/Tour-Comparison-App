@@ -9,7 +9,7 @@ const Gallery = ({ tours, setTours, onRemove }) => {
   // Fetch tours when component mounts
   const fetchTours = async () => {
     try {
-      const response = await fetch('https://course-api.com/react-tours-project');
+      const response = await fetch('https://api.allorigins.win/raw?url=https://course-api.com/react-tours-project');
       if (!response.ok) {
         throw new Error('Network response did not work');
       }
