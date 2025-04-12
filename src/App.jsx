@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Gallery from './components/Gallery'; // This component will fetch & display tours
+import Gallery from './Components/Gallery'; // This component will fetch & display tours
 
 function App() {
   // Global state to hold list of tours
