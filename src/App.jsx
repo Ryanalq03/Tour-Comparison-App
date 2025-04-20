@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
-import Gallery from './Components/Gallery'; // This component will fetch & display tours
+import Gallery from './Components/Gallery';
+import DestinationSelector from './Components/DestinationSelector';
 
 function App() {
-  // Global state to hold list of tours
   const [tours, setTours] = useState([]);
+  const [selectedDestination, setSelectedDestination] = useState('All Destinations');
 
-  // Function to remove a tour by its id
   const removeTour = (id) => {
     setTours(tours.filter((tour) => tour.id !== id));
   };
 
+  const filteredTours = selectedDestination === 'All Destinations'
+    ? tours
+    : tours.filter((tour) => tour.name === selectedDestination);
+
   return (
     <main>
       <h1>Tour Comparison App</h1>
-      <Gallery tours={tours} setTours={setTours} onRemove={removeTour} />
+      <DestinationSelector
+        tours={tours}
+        selectedDestination={selectedDestination}
+        setSelectedDestination={setSelectedDestination}
+      />
+      <Gallery tours={filteredTours} setTours={setTours} onRemove={removeTour} />
     </main>
   );
 }
