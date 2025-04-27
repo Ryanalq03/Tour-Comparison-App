@@ -1,22 +1,57 @@
-import React, { useState } from 'react';
-import Gallery from './Components/Gallery'; // This component will fetch & display tours
+import React, { useState, useEffect } from 'react';
 
-function App() {
-  // Global state to hold list of tours
-  const [tours, setTours] = useState([]);
+function Gallery({ tours, setTours, onRemove }) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Function to remove a tour by its id
-  const removeTour = (id) => {
-    setTours(tours.filter((tour) => tour.id !== id));
-  };
+  useEffect(() => {
+    const fetchTours = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch('https://course-api.com/react-tours-project');
+        if (!response.ok) {
+          throw new Error('Failed to fetch tours');
+        }
+        const data = await response.json();
+        setTours(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTours();
+  }, [setTours]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (tours.length === 0) {
+    return <p>No tours available.</p>;
+  }
 
   return (
-    <main>
-      <h1>Tour Comparison App</h1>
-      <Gallery tours={tours} setTours={setTours} onRemove={removeTour} />
-    </main>
+    <section>
+      <h2>Available Tours</h2>
+      <ul>
+        {tours.map((tour) => (
+          <li key={tour.id}>
+            <h3>{tour.name}</h3>
+            <p>{tour.info}</p>
+            <button onClick={() => onRemove(tour.id)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
-export default App;
-
+export default Gallery;
