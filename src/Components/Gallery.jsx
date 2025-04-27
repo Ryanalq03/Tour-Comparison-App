@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import TourCard from './TourCard';
-import '../styles/styles.css'; // Imports styling
+import '../styles/styles.css';
 
 const Gallery = ({ tours, setTours, onRemove }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Fetch tours when component mounts
   const fetchTours = async () => {
     try {
       const response = await fetch('https://api.allorigins.win/raw?url=https://course-api.com/react-tours-project');
@@ -14,7 +13,7 @@ const Gallery = ({ tours, setTours, onRemove }) => {
         throw new Error('Network response did not work');
       }
       const data = await response.json();
-      setTours(data); 
+      setTours(data);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -36,7 +35,7 @@ const Gallery = ({ tours, setTours, onRemove }) => {
   if (tours.length === 0) {
     return (
       <>
-        <h2>No tours available</h2>
+        <h2>No tours left. Refresh to reload.</h2>
         <button onClick={fetchTours}>Refresh</button>
       </>
     );
